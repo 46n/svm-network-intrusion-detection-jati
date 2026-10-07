@@ -15,6 +15,11 @@ The original author's notebook is linked below, rather than republished as our w
 
 ## Recorded development findings
 
+The figures below come from the completed experiments. **All reported evaluation
+results are development-validation findings; no untouched final-test score exists.**
+
+### Scaling and parameter search
+
 Experiments 1–3 share one 2,000-row sample, a 1,400/600 training/development split,
 77 features and 50 identical unshuffled stratified CV folds. Selection uses ordinary
 accuracy. The baseline selected C=100, gamma='scale': 96.833333% ordinary accuracy,
@@ -27,11 +32,46 @@ produced identical development predictions. It provided no additional gain; tied
 CV scores do not establish a unique optimum. The baseline-to-scaled comparison
 includes scaling together with parameter reselection.
 
+![3D plot of measured C–gamma combinations and their mean CV ordinary accuracy, with the selected C=1 and gamma=0.1 marked by a red star.](figures/experiment3_C_gamma_3D.png)
+
+*Figure 1. Expanded C–gamma search on the training data.* The star marks the
+selected configuration's **99.64% mean CV ordinary accuracy**, distinct from its
+99.83% development accuracy. The surface displays 35 numeric-gamma combinations
+from the full 49-candidate search; `scale` and `auto` are excluded from the surface.
+It connects measured points without establishing scores for intermediate values.
+The broad high-scoring region and tied CV scores do not establish a unique optimum.
+
+### Consistency across five fresh samples
+
 Experiment 4 holds the two configurations fixed across five fresh, disjoint samples,
 with shuffled grouped CV. Mean ordinary accuracy was 95.766667% versus 99.833333%;
-mean balanced accuracy was 95.887010% versus 99.829576%. Across 3,000 evaluation
-records, missed attacks decreased from 36 to 3 and false alarms from 91 to 2.
-These are recorded development-validation findings, not untouched final-test scores.
+mean balanced accuracy was 95.887010% versus 99.829576%. Both metrics improved
+in all five samples. Each comparison uses the same 600 development-evaluation
+records for both configurations, without retuning on those records.
+
+![Paired comparisons for seeds 42–46 showing higher ordinary and balanced accuracy for the enhanced configuration in every sample.](figures/experiment4_five_sample_comparison.png)
+
+*Figure 2. Paired development performance across five fresh samples.* Blue circles
+represent the original selected configuration; orange diamonds represent the
+enhanced selected configuration. Lines connect results on the same sample.
+**Both horizontal axes start at 90%** to make differences readable. Five samples
+from one CSV provide evidence within this study's scope, rather than a guarantee
+of performance on other days, networks or attacks.
+
+### Missed attacks and false alarms
+
+Across the 3,000 distinct development-evaluation records in Experiment 4, missed
+attacks decreased from **36 to 3** and false alarms from **91 to 2**. Total errors
+decreased from 127 to 5. Paired predictions identify 125 corrected errors and
+three newly introduced errors; the enhanced configuration still makes mistakes.
+
+![Grouped bars showing missed attacks decreasing from 36 to 3 and false alarms decreasing from 91 to 2 across 3,000 development-evaluation records.](figures/experiment4_missed_attacks_false_alarms.png)
+
+*Figure 3. Error counts across all five Experiment 4 development samples.* Missed
+attacks are attack records predicted as benign (false negatives); false alarms
+are benign records predicted as attacks (false positives). These counts make the
+accuracy improvement concrete: fewer attacks were missed and fewer benign flows
+were incorrectly flagged. They are not results from an untouched final test.
 
 ## Getting started
 
