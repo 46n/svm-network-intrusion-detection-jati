@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "Please cite this versioned code supplement and acknowledge the original source separately."
+type: software
+title: "SVM Network Intrusion Detection: Controlled Enhancements"
+authors:
+  - name: "46n"
+version: "1.0.0"
+date-released: "2026-10-07"
+url: "https://github.com/46n/svm-network-intrusion-detection-jati"
+repository-code: "https://github.com/46n/svm-network-intrusion-detection-jati"
+license: MIT
+abstract: "Controlled scaling and C-gamma experiments with repeated-sample development validation of an RBF SVM for network intrusion classification."
+keywords:
+  - support vector machine
+  - network intrusion detection
+  - feature scaling
+  - hyperparameter search

@@ -1,0 +1,19 @@
+# Inputs, generated evidence and fitted models stay local.
+data/
+private_inputs/
+svm_enhancement_evidence/
+svm_repeated_sample_evidence/
+notebooks/svm_enhancement_evidence/
+notebooks/svm_repeated_sample_evidence/
+*.joblib
+*.pkl
+*.pickle
+*.npz
+*.zip
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+__pycache__/
+*.pyc
+.venv/
+.env
+.env.*

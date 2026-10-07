@@ -1,0 +1,121 @@
+{
+  "purpose": "Code publication verification; no new model-performance verification",
+  "checked_on": "2026-10-07",
+  "training_executed": false,
+  "dataset_opened": false,
+  "supplied_models_loaded": false,
+  "python_3_11_syntax_checked": true,
+  "only_code_changes": "DATASET_PATH, EVIDENCE_ZIP and HISTORY_ROOT defaults made portable",
+  "recorded_outputs": "Numerical text and images preserved; only machine-specific path prefixes redacted",
+  "original_source_commit_checked_at_publication": "84973a22b4d84ebb879f93e9ba6a75174a238d13",
+  "notebooks": [
+    {
+      "file": "notebooks/SVM_Enhancement_Controlled_Experiments.ipynb",
+      "source_notebook_sha256": "816377a2eacd9fea9e6e5c0a9565281160c860a33188d71f474dd2c75efc1331",
+      "publication_notebook_sha256": "07b55658962fd253559a88640446e59e313ca78dc190c4996e4b359071e51ed9",
+      "python_code_cells": [
+        {
+          "cell_index": 1,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 4,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 6,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 9,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 12,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 14,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 17,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 20,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 23,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 26,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 29,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 32,
+          "operations_preserved_except_input_paths": true
+        }
+      ],
+      "embedded_images_preserved": true
+    },
+    {
+      "file": "notebooks/SVM_Experiment_4_Repeated_Sample_Validation.ipynb",
+      "source_notebook_sha256": "489006f8a66a8237c0585152127d48f0d177d2d42684f0be06070363b132f841",
+      "publication_notebook_sha256": "be2819aa75078c3e28de6ece75dd72115db654a92ccd8e7df646ad724e97d892",
+      "python_code_cells": [
+        {
+          "cell_index": 1,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 4,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 7,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 10,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 13,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 16,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 19,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 22,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 25,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 28,
+          "operations_preserved_except_input_paths": true
+        },
+        {
+          "cell_index": 31,
+          "operations_preserved_except_input_paths": true
+        }
+      ],
+      "embedded_images_preserved": true
+    }
+  ]
+}
