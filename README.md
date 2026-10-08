@@ -13,6 +13,64 @@ machine for benign versus LOIC-HTTP DDoS classification using one CSE-CIC-IDS201
 The earlier pre-tuning version is omitted to avoid duplicating the working notebook.
 The original author's notebook is linked below, rather than republished as our work.
 
+## From the original source to this implementation
+
+The original GitHub notebook provided the starting workflow: prepare network-flow
+features, draw a 2,000-row sample, make a 70/30 split and use `GridSearchCV` to
+select an RBF SVM by ordinary accuracy. Its search already tested different C and
+gamma values. Our study evaluates changes to that workflow, rather than introducing
+SVM or grid search as new methods.
+
+**C** controls the penalty for training errors. **Gamma** controls how locally the
+RBF kernel responds to a training observation. The original setting
+`gamma='scale'` chooses gamma from the input variance; it **does not standardize
+the features**. A search's “best parameters” are best under its tested candidates,
+input representation, folds and selection metric, rather than a proven global optimum.
+
+1. **Reconstruct and measure the original workflow — Experiment 1 / A.**
+   Keep the source's sampling order, seed 42, 77-feature policy, unscaled SVM and
+   original grid: `C=[0.1, 1, 10, 100]` and
+   `gamma=['scale', 'auto', 0.1, 1, 10]`. That gives 20 candidates and 1,000 CV fits.
+   Record balanced accuracy, attack precision/recall/F1, confusion-matrix counts,
+   training and CV scores, predictions and overlap checks alongside ordinary
+   accuracy. These measurements describe the existing model without changing
+   which score selects it. Read the CSV in chunks and limit CV to two workers
+   for practical resource use. This is a source-equivalent reconstruction with
+   instrumentation, rather than an untouched execution of the original notebook.
+
+2. **Add scaling and reselect parameters — Experiment 2 / B.**
+   Put `StandardScaler` before `SVC` inside a scikit-learn pipeline. The scaler
+   learns its mean and variance from each CV training fold, then from the full
+   training partition for the selected model. Development rows do not fit it.
+   Keep the same sample, split, folds, 20 candidates and ordinary-accuracy
+   selection rule. The selected settings change from `C=100, gamma='scale'` to
+   `C=1, gamma=0.1`. This comparison measures **scaling with parameter reselection**;
+   it does not isolate scaling at fixed C and gamma.
+
+3. **Expand the scaled search — Experiment 3 / C.**
+   Retain every original candidate and extend C to
+   `[0.01, 0.1, 1, 10, 100, 300, 1000]`. Add two numeric gamma values at one third
+   and three times a reference calculated from standardized training data only
+   (approximately `0.004975` and `0.044776` in the recorded run). The full search
+   now has 49 combinations and 2,450 CV fits. Keep the sample, pipeline, folds
+   and selection rule fixed. It selects the same configuration as Experiment 2
+   and makes identical development predictions: **the larger search adds no gain**.
+
+4. **Check the selected configurations on fresh samples — Experiment 4.**
+   Freeze the unscaled `C=100, gamma='scale'` and scaled `C=1, gamma=0.1` models.
+   Compare them on five disjoint 2,000-row samples, using the same 1,400 training
+   and 600 development rows for both models within each sample. Exclude tracked
+   historical and reserved Flow IDs, and group related rows by Flow ID or exact
+   feature identity. Use 50 shuffled grouped CV folds and check every outer and
+   CV boundary. There is no new parameter search or selection of favorable seeds.
+   This strengthens the comparison within the sampled traffic, while changing
+   the grouping protocol from the earlier row-random evaluation.
+
+The opportunity was therefore to test scaling together with parameter selection
+and to check the resulting advantage across fresh samples. The results do not
+show that the original grid-search choice was wrong for its original setup, or
+that widening a grid necessarily improves a classifier.
+
 ## Recorded development findings
 
 The figures below come from the completed experiments. **All reported evaluation
@@ -97,6 +155,28 @@ the main notebook. Preserve the completed evidence ZIP. Run Experiment 4 separat
 only after its required historical inputs are present. It compares frozen settings
 and does not retune them. Save notebooks before packaging their evidence.
 
+## Reading the simplified code
+
+Both notebooks remain self-contained. Short expressions are kept together and
+the introductory notes explain the current workflow without obsolete run instructions.
+
+- `train_indices` and `evaluation_indices` identify the rows on each side of a split;
+  `fold_train_indices` and `fold_validation_indices` identify CV partitions.
+- `evidence_dir` is the folder holding a run's predictions, metrics and checks.
+- `run_search` in Experiments 1–3 performs the shared search and measurement procedure,
+  so all three models follow the same rules.
+- `build_model` in Experiment 4 constructs one of the two frozen configurations.
+- `find_group` and `merge_groups` in Experiment 4 connect records sharing a Flow ID
+  or an exact feature vector. The boundary checks verify that those connected
+  records do not cross a training/evaluation or CV boundary.
+- `metric_values` calculates metrics from predictions; the saved prediction CSVs
+  allow those metrics to be recalculated independently.
+
+The experiment label **C / Experiment 3** is different from the SVM parameter **C**.
+Fitting, sample selection, seeds, grid order, scoring, controls and evidence guards
+were preserved during simplification. Removing those guards would change the
+verified procedure rather than merely simplify its style.
+
 ## Publication and verification status
 
 The notebooks were reconstructed from supplied Markdown/PNG exports. Code cells
@@ -104,11 +184,28 @@ start unexecuted; **Recorded output** Markdown cells show prior user runs. This
 GitHub publication did not rerun training, open the dataset or load supplied models.
 Original notebook execution and MIME metadata are not recoverable from an export.
 
-The readability edition preserved Python operations, apart from splitting grouped
-imports. Publication changes only input paths and explanatory metadata; directory
-prefixes in recorded outputs were redacted. Numerical output text and embedded
-PNG bytes were retained. [Publication verification](docs/PUBLICATION_VERIFICATION.json)
-records static checks and file identities. This is not a new runtime verification.
+The initial publication preserved Python operations apart from splitting grouped
+imports and making input paths portable; directory prefixes in recorded outputs
+were redacted. [Initial publication verification](docs/PUBLICATION_VERIFICATION.json)
+records the file identities and checks for that edition, retained in release 1.0.0.
+
+The current readability revision compacts unnecessary multiline expressions,
+uses descriptive identifiers and consolidates notebook instructions. Python 3.11
+syntax checks and comparisons of the Python syntax trees confirm that executable
+operations are preserved after reversing the documented identifier renames.
+Recorded output cells, notebook images and the three README figure files are
+unchanged. [Simplification verification](docs/SIMPLIFICATION_VERIFICATION.json)
+records the current notebook identities and per-cell checks.
+
+The supplied JATI working manuscript was read to align this README with the group's
+reported study. Its results agree with the recorded findings summarized above.
+The grid sizes are stated separately here: 20 combinations in Experiment 2 and
+49 in Experiment 3, although their selected settings and development predictions
+are identical. The manuscript and private evidence are not redistributed in this repository.
+
+These are static code and record-preservation checks, not a new runtime verification.
+No training was rerun for the readability revision. Historical scores describe the
+earlier completed runs; identical fresh scores are not asserted for a newly installed environment.
 
 The historical environment reported Python 3.11.17, NumPy 2.4.6, pandas 3.0.6,
 scikit-learn 1.9.1, SciPy 1.17.1 and joblib 1.6.0. These are recorded provenance,
@@ -152,12 +249,12 @@ manuscript author list. Add verified contributor credit as the group finalises a
 Suggested software reference:
 
 46n. (2026). *SVM network intrusion detection: Controlled enhancements*
-(Version 1.0.0) [Computer software]. https://github.com/46n/svm-network-intrusion-detection-jati/releases/tag/jati-svm-v1.0.0
+(Version 1.0.1) [Computer software]. https://github.com/46n/svm-network-intrusion-detection-jati/releases/tag/jati-svm-v1.0.1
 
 Suggested availability statement:
 
 "The implementation accompanying this study is available at https://github.com/46n/svm-network-intrusion-detection-jati
-(release jati-svm-v1.0.0). The source implementation by DuseTrive is acknowledged separately."
+(release jati-svm-v1.0.1). The source implementation by DuseTrive is acknowledged separately."
 
 GitHub's citation metadata is provided in [CITATION.cff](CITATION.cff).
 This software citation does not replace attribution of the original implementation

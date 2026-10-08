@@ -1,0 +1,149 @@
+{
+  "checked_on": "2026-10-08",
+  "purpose": "Readability refactor verification; not a new performance experiment",
+  "training_executed": false,
+  "dataset_opened": false,
+  "supplied_models_loaded": false,
+  "method": "Compare Python syntax trees per cell and for the complete notebook after reversing documented identifier renames; compile without execution; compare recorded output and attachment bytes",
+  "changes": "Compact unnecessary multiline expressions, use descriptive identifiers, explain experiment labels and parameters, correct stale RUN_TUNING instructions; consolidate obsolete and repeated introductory notes into a short current run guide",
+  "unchanged": "Executable operations, constants, random seeds, grids and their order, fold generation, model fitting and prediction, scoring, guards and exports",
+  "limits": "No runtime replay or fresh accuracy measurement; file hashes and runtime metadata change when code is edited or run again",
+  "notebooks": [
+    {
+      "file": "notebooks/SVM_Enhancement_Controlled_Experiments.ipynb",
+      "before_sha256": "07b55658962fd253559a88640446e59e313ca78dc190c4996e4b359071e51ed9",
+      "after_sha256": "83b57a9892a5b4b827d5d1f9d4b46925c639dc0da2c43df586e18b6dcc452a1e",
+      "identifier_mapping": {
+        "OUT": "evidence_dir",
+        "train_pos": "train_indices",
+        "eval_pos": "evaluation_indices",
+        "fit_ids": "fold_train_indices",
+        "val_ids": "fold_validation_indices"
+      },
+      "whole_notebook_operations_preserved_after_identifier_mapping": true,
+      "python_3_11_syntax_checked": true,
+      "recorded_output_cells_preserved": 11,
+      "attachments_and_code_outputs_preserved": true,
+      "code_lines_before": 878,
+      "code_lines_after": 815,
+      "code_cell_checks": [
+        {
+          "cell_index": 1,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 4,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 6,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 9,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 12,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 14,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 17,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 20,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 23,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 26,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 29,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 32,
+          "operations_preserved_after_identifier_mapping": true
+        }
+      ]
+    },
+    {
+      "file": "notebooks/SVM_Experiment_4_Repeated_Sample_Validation.ipynb",
+      "before_sha256": "be2819aa75078c3e28de6ece75dd72115db654a92ccd8e7df646ad724e97d892",
+      "after_sha256": "9b1b96356d1191775b6a8fa0e2037880f47619641a9f9f9c66400d6d3664d543",
+      "identifier_mapping": {
+        "OUT": "evidence_dir",
+        "tr": "train_indices",
+        "ev": "evaluation_indices",
+        "fit_local": "fold_train_indices",
+        "val_local": "fold_validation_indices",
+        "root": "find_group",
+        "join": "merge_groups",
+        "ra": "group_a",
+        "rb": "group_b"
+      },
+      "whole_notebook_operations_preserved_after_identifier_mapping": true,
+      "python_3_11_syntax_checked": true,
+      "recorded_output_cells_preserved": 10,
+      "attachments_and_code_outputs_preserved": true,
+      "code_lines_before": 929,
+      "code_lines_after": 864,
+      "code_cell_checks": [
+        {
+          "cell_index": 1,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 4,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 7,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 10,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 13,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 16,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 19,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 22,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 25,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 28,
+          "operations_preserved_after_identifier_mapping": true
+        },
+        {
+          "cell_index": 31,
+          "operations_preserved_after_identifier_mapping": true
+        }
+      ]
+    }
+  ]
+}
