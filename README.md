@@ -21,6 +21,18 @@ accuracy. The practical difference was fewer classification mistakes:
 
 [See the notebooks](#notebooks) · [How the comparison works](#from-the-original-source-to-this-implementation) · [Run requirements](#getting-started) · [Limits](#known-limitations)
 
+## Study map
+
+```mermaid
+flowchart LR
+    Source[Original notebook workflow] --> Baseline[1. Reconstruct baseline]
+    Baseline --> Scaling[2. Scale inside cross-validation]
+    Scaling --> Grid[3. Expand C–gamma search]
+    Grid --> Repeat[4. Compare frozen settings on five fresh samples]
+```
+
+*Steps 1–3 use one development sample. Step 4 checks the two selected configurations on new, disjoint samples without retuning them.*
+
 ## Notebooks
 
 - [Experiments 1–3](notebooks/SVM_Enhancement_Controlled_Experiments.ipynb):
