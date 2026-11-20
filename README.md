@@ -1,7 +1,25 @@
 # SVM Network Intrusion Detection: Controlled Enhancements
 
-Code supplement for an AI Methods / JATI study of an RBF-kernel support vector
-machine for benign versus LOIC-HTTP DDoS classification using one CSE-CIC-IDS2018 CSV.
+Code supplement for a controlled study of an RBF-kernel support vector
+machine distinguishing benign traffic from LOIC-HTTP DDoS traffic in one CSE-CIC-IDS2018 CSV.
+
+## Results in one minute
+
+Across five fresh, disjoint development samples, the frozen scaled configuration
+outperformed the frozen unscaled configuration on both ordinary and balanced
+accuracy. The practical difference was fewer classification mistakes:
+
+| Development result across five samples | Unscaled configuration | Scaled configuration |
+| --- | ---: | ---: |
+| Mean balanced accuracy | 95.89% | 99.83% |
+| Missed attacks | 36 | 3 |
+| False alarms | 91 | 2 |
+
+![Grouped bars showing missed attacks decreasing from 36 to 3 and false alarms from 91 to 2 across 3,000 development records.](figures/experiment4_missed_attacks_false_alarms.png)
+
+*Five samples from one CSV; these are development-validation results, not an untouched final-test score or a guarantee for other networks.*
+
+[See the notebooks](#notebooks) · [How the comparison works](#from-the-original-source-to-this-implementation) · [Run requirements](#getting-started) · [Limits](#known-limitations)
 
 ## Notebooks
 
@@ -259,3 +277,4 @@ Suggested availability statement:
 GitHub's citation metadata is provided in [CITATION.cff](CITATION.cff).
 This software citation does not replace attribution of the original implementation
 or citation of the dataset and methodological references in the paper.
+
